@@ -26,6 +26,9 @@ For more information, please refer to <http://unlicense.org>
  */
 package br.estacio.prii.entidade;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
+
 public class Jogo {
 
     private Integer id;
@@ -33,8 +36,7 @@ public class Jogo {
     private Selecao selecaoB;
     private Integer placarA;
     private Integer placarB;
-    private String data;
-    private String horario;
+    private LocalDateTime data = LocalDateTime.now();
     private String fase;
     private String grupo;
     private Estadio estadio;
@@ -79,20 +81,46 @@ public class Jogo {
         this.placarB = placarB;
     }
 
-    public String getData() {
+    public LocalDateTime getData() {
         return data;
     }
+    public String getDataString() {
+        return data.toString();
+    }
 
-    public void setData(String data) {
+    public void setData(LocalDateTime data){
         this.data = data;
+    }
+    public void parseData(String data) throws Exception {
+        try {
+            this.data = LocalDateTime.parse(data);
+        } catch (DateTimeParseException  e) {
+            throw new Exception(e.getMessage());
+        }
     }
 
     public String getHorario() {
-        return horario;
+        StringBuilder sb = new StringBuilder();
+        sb.append(data.getHour());
+        sb.append("/");
+        sb.append(data.getMinute());
+        sb.append("/");
+        sb.append(data.getSecond());
+        sb.append("/");
+        return sb.toString();
     }
 
-    public void setHorario(String horario) {
-        this.horario = horario;
+    public void setHorario(String horario) throws Exception {
+        try {
+            Integer hora = Integer.parseInt(horario.split(":")[0]);
+            Integer minuto = Integer.parseInt(horario.split(":")[1]);
+            Integer segundo = Integer.parseInt(horario.split(":")[2]);
+            data = data.withHour(hora);
+            data = data.withMinute(minuto);
+            data = data.withSecond(segundo);
+        } catch (Exception e) {
+            throw new Exception("Erro ao converter horario: "+e.getMessage());
+        }
     }
 
     public String getFase() {
