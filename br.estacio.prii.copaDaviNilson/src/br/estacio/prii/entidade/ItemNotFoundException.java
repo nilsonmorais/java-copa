@@ -1,5 +1,4 @@
-/*
-This is free and unencumbered software released into the public domain.
+/* This is free and unencumbered software released into the public domain.
 
 Anyone is free to copy, modify, publish, use, compile, sell, or
 distribute this software, either in source code form or as a compiled
@@ -23,17 +22,15 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 
 For more information, please refer to <http://unlicense.org>
- */
+*/
 
-package br.estacio.prii.main;
+package br.estacio.prii.entidade;
 
-public class Main {
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-       
+public class ItemNotFoundException extends Exception {
+
+    public ItemNotFoundException(String message) {
+        super(message);
     }
     
 }

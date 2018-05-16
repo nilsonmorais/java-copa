@@ -26,12 +26,22 @@ For more information, please refer to <http://unlicense.org>
  */
 package br.estacio.prii.entidade;
 
+import java.util.ArrayList;
+
 public class Estadio {
 
     private Integer id;
     private String nome;
     private String cidade;
     private Integer capacidade;
+    private final ArrayList<Jogo> jogos = new ArrayList<>();
+
+    public void addJogo(Jogo jogo) {
+        jogos.add(jogo);
+    }
+    public ArrayList<Jogo> getJogos() {
+        return jogos;
+    }
 
     public Integer getId() {
         return id;

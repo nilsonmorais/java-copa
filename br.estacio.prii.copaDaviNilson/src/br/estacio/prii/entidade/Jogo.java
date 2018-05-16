@@ -41,6 +41,17 @@ public class Jogo {
     private String grupo;
     private Estadio estadio;
 
+    public Jogo(Selecao selecaoA, Selecao selecaoB, String fase, String grupo, Estadio estadio) {
+        this.selecaoA = selecaoA;
+        this.selecaoB = selecaoB;
+        this.fase = fase;
+        this.grupo = grupo;
+        this.estadio = estadio;
+    }
+
+    public Jogo() {
+    }
+
     public Integer getId() {
         return id;
     }
@@ -84,29 +95,36 @@ public class Jogo {
     public LocalDateTime getData() {
         return data;
     }
+
     public String getDataString() {
-        return data.toString();
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("%02d", data.getDayOfMonth()));
+        sb.append("/");
+        sb.append(String.format("%02d", data.getMonthValue()));
+        sb.append("/");
+        sb.append(String.format("%02d", data.getYear()));
+        return sb.toString();
     }
 
-    public void setData(LocalDateTime data){
+    public void setData(LocalDateTime data) {
         this.data = data;
     }
+
     public void parseData(String data) throws Exception {
         try {
             this.data = LocalDateTime.parse(data);
-        } catch (DateTimeParseException  e) {
+        } catch (DateTimeParseException e) {
             throw new Exception(e.getMessage());
         }
     }
 
     public String getHorario() {
         StringBuilder sb = new StringBuilder();
-        sb.append(data.getHour());
-        sb.append("/");
-        sb.append(data.getMinute());
-        sb.append("/");
-        sb.append(data.getSecond());
-        sb.append("/");
+        sb.append(String.format("%02d", data.getHour()));
+        sb.append(":");
+        sb.append(String.format("%02d", data.getMinute()));
+        sb.append(":");
+        sb.append(String.format("%02d", data.getSecond()));
         return sb.toString();
     }
 
@@ -118,8 +136,8 @@ public class Jogo {
             data = data.withHour(hora);
             data = data.withMinute(minuto);
             data = data.withSecond(segundo);
-        } catch (Exception e) {
-            throw new Exception("Erro ao converter horario: "+e.getMessage());
+        } catch (NumberFormatException e) {
+            throw new Exception("Erro ao converter horario: " + e.getMessage());
         }
     }
 
@@ -139,8 +157,12 @@ public class Jogo {
         this.grupo = grupo;
     }
 
-    public Estadio getEstadio() {
-        return estadio;
+    public Estadio getEstadio() throws ItemNotFoundException {
+        if (estadio == null){
+            throw new ItemNotFoundException("Estádio não definido.");
+        } else {
+            return estadio;
+        }
     }
 
     public void setEstadio(Estadio estadio) {

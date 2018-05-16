@@ -35,6 +35,14 @@ public class Selecao {
     private String descricao;
     private String imagem;
 
+    public Selecao(String nome, String tecnico, String grupo, String descricao, String imagem) {
+        this.nome = nome;
+        this.tecnico = tecnico;
+        this.grupo = grupo;
+        this.descricao = descricao;
+        this.imagem = imagem;
+    }
+
     public Integer getId() {
         return id;
     }
