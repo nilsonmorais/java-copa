@@ -24,19 +24,24 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 For more information, please refer to <http://unlicense.org>
  */
+package br.estacio.prii.persistence;
 
-package br.estacio.prii.main;
-
-import br.estacio.prii.persistence.DAO;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class Main {
+public class DAO {
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) throws SQLException {
-       DAO d = new DAO();
+    public DAO() throws SQLException {
+        try {
+            Class.forName("org.hsqldb.jdbc.JDBCDriver");
+        } catch (Exception e) {
+            System.err.println("ERROR: failed to load HSQLDB JDBC driver.");
+            e.printStackTrace();
+            return;
+        }
+
+        Connection c = DriverManager.getConnection("jdbc:hsqldb:file:banco", "SA", "");
     }
-    
+
 }

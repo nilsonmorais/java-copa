@@ -37,11 +37,18 @@ public class Jogo {
     private Integer placarA;
     private Integer placarB;
     private LocalDateTime data = LocalDateTime.now();
-    private String fase;
+    public enum tipoFase {
+        Grupos, 
+        Oitavas_de_Final,
+        Quartas_de_Final,
+        Semi_Final,
+        Final;
+    }
+    private tipoFase fase;
     private String grupo;
     private Estadio estadio;
 
-    public Jogo(Selecao selecaoA, Selecao selecaoB, String fase, String grupo, Estadio estadio) {
+    public Jogo(Selecao selecaoA, Selecao selecaoB, tipoFase fase, String grupo, Estadio estadio) {
         this.selecaoA = selecaoA;
         this.selecaoB = selecaoB;
         this.fase = fase;
@@ -139,14 +146,6 @@ public class Jogo {
         } catch (NumberFormatException e) {
             throw new Exception("Erro ao converter horario: " + e.getMessage());
         }
-    }
-
-    public String getFase() {
-        return fase;
-    }
-
-    public void setFase(String fase) {
-        this.fase = fase;
     }
 
     public String getGrupo() {
