@@ -24,55 +24,19 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 For more information, please refer to <http://unlicense.org>
  */
-package br.estacio.prii.entidade;
 
-import java.util.ArrayList;
+package br.estacio.prii.copa.main;
 
-public class Estadio {
+import br.estacio.prii.copa.persistence.DAO;
+import java.sql.SQLException;
 
-    private Integer id;
-    private String nome;
-    private String cidade;
-    private Integer capacidade;
-    private final ArrayList<Jogo> jogos = new ArrayList<>();
+public class Main {
 
-    public void addJogo(Jogo jogo) {
-        jogos.add(jogo);
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) throws SQLException {
+       DAO d = new DAO();
     }
-    public ArrayList<Jogo> getJogos() {
-        return jogos;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getCidade() {
-        return cidade;
-    }
-
-    public void setCidade(String cidade) {
-        this.cidade = cidade;
-    }
-
-    public Integer getCapacidade() {
-        return capacidade;
-    }
-
-    public void setCapacidade(Integer capacidade) {
-        this.capacidade = capacidade;
-    }
-
+    
 }

@@ -24,7 +24,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 For more information, please refer to <http://unlicense.org>
  */
-package br.estacio.prii.entidade;
+package br.estacio.prii.copa.entidade;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;

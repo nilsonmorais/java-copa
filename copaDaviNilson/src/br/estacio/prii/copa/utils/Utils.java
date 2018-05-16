@@ -1,4 +1,4 @@
-package br.estacio.prii.utils;
+package br.estacio.prii.copa.utils;
 
 /*
 This is free and unencumbered software released into the public domain.

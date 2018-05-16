@@ -24,29 +24,31 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 For more information, please refer to <http://unlicense.org>
  */
-package br.estacio.prii.entidade;
+package br.estacio.prii.copa.entidade;
 
-import br.estacio.prii.utils.Utils;
+public class Selecao {
 
-public class Usuario {
-
-    private String login;
-    private String senha;
+    private Integer id;
     private String nome;
-    private String email;
-    private String celular;
-    private Boolean admin;
-    private String obs;
+    private String tecnico;
+    private String grupo;
+    private String descricao;
+    private String imagem;
 
-    public Usuario() {
+    public Selecao(String nome, String tecnico, String grupo, String descricao, String imagem) {
+        this.nome = nome;
+        this.tecnico = tecnico;
+        this.grupo = grupo;
+        this.descricao = descricao;
+        this.imagem = imagem;
     }
 
-    public String getLogin() {
-        return login;
+    public Integer getId() {
+        return id;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getNome() {
@@ -57,57 +59,35 @@ public class Usuario {
         this.nome = nome;
     }
 
-    public String getEmail() {
-        return email;
+    public String getTecnico() {
+        return tecnico;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setTecnico(String tecnico) {
+        this.tecnico = tecnico;
     }
 
-    public String getCelular() {
-        return celular;
+    public String getGrupo() {
+        return grupo;
     }
 
-    public void setCelular(String celular) {
-        this.celular = celular;
+    public void setGrupo(String grupo) {
+        this.grupo = grupo;
     }
 
-    public Boolean getAdmin() {
-        return admin;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public void setAdmin(Boolean admin) {
-        this.admin = admin;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
-    public String getObs() {
-        return obs;
+    public String getImagem() {
+        return imagem;
     }
 
-    public void setObs(String obs) {
-        this.obs = obs;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    /**
-     * setSenha recebe uma string e converte para um hash MD5
-     *
-     * @param senha
-     * @throws Exception
-     */
-    public void setSenha(String senha) throws Exception {
-        try {
-            this.senha = Utils.MD5(senha);
-        } catch (Exception ex) {
-            throw new Exception(ex.getMessage());
-        }
-    }
-
-    public Boolean validaLogin(String senhaValida) throws Exception {
-        return senha.equals(Utils.MD5(senhaValida));
+    public void setImagem(String imagem) {
+        this.imagem = imagem;
     }
 }

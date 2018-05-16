@@ -24,7 +24,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 For more information, please refer to <http://unlicense.org>
  */
-package br.estacio.prii.persistence;
+package br.estacio.prii.copa.persistence;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

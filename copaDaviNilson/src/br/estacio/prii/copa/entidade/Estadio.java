@@ -1,4 +1,5 @@
-/* This is free and unencumbered software released into the public domain.
+/*
+This is free and unencumbered software released into the public domain.
 
 Anyone is free to copy, modify, publish, use, compile, sell, or
 distribute this software, either in source code form or as a compiled
@@ -22,15 +23,56 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 
 For more information, please refer to <http://unlicense.org>
-*/
+ */
+package br.estacio.prii.copa.entidade;
 
-package br.estacio.prii.entidade;
+import java.util.ArrayList;
 
+public class Estadio {
 
-public class ItemNotFoundException extends Exception {
+    private Integer id;
+    private String nome;
+    private String cidade;
+    private Integer capacidade;
+    private final ArrayList<Jogo> jogos = new ArrayList<>();
 
-    public ItemNotFoundException(String message) {
-        super(message);
+    public void addJogo(Jogo jogo) {
+        jogos.add(jogo);
     }
-    
+    public ArrayList<Jogo> getJogos() {
+        return jogos;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
+
+    public Integer getCapacidade() {
+        return capacidade;
+    }
+
+    public void setCapacidade(Integer capacidade) {
+        this.capacidade = capacidade;
+    }
+
 }
