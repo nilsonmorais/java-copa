@@ -24,19 +24,31 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 For more information, please refer to <http://unlicense.org>
  */
-
 package br.estacio.prii.copa.main;
 
-import br.estacio.prii.copa.persistence.DAO;
+import br.estacio.prii.copa.entidade.Usuarios;
+import br.estacio.prii.copa.persistence.UsuariosDAO;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 public class Main {
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) throws SQLException {
-       DAO d = new DAO();
-    }
+    private static final Logger LOG = Logger.getLogger(Main.class.getName());
     
+    public static void main(String[] args) throws SQLException, Exception {
+
+        try {
+            UsuariosDAO u = new UsuariosDAO();
+            List<Usuarios> Usuarios = u.getAllUsuarios();
+            for (Usuarios Usuario : Usuarios) {
+                LOG.log(Level.INFO, "Registro: {0}", Usuario.getLogin());
+            }
+        } catch (Exception exception) {
+            LOG.severe(exception.getMessage());
+        }
+    }
+
 }

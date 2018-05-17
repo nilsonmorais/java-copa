@@ -26,23 +26,34 @@ For more information, please refer to <http://unlicense.org>
  */
 package br.estacio.prii.copa.persistence;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import br.estacio.prii.copa.entidade.Usuarios;
+import br.estacio.prii.copa.main.Main;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
 
-public class DAO {
+public class UsuariosDAO {
 
-    private Connection connect;
-
-    public DAO() throws SQLException, Exception {
-        try {
-            Class.forName("org.apache.derby.jdbc.ClientDriver").newInstance();
-            connect = DriverManager.getConnection("jdbc:derby:copa");
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException e) {
-            throw new Exception(e.getMessage());
-        }
-
-//        Connection c = DriverManager.getConnection("jdbc:derby:copa;create=true", "admin", "admin");
+    private static final String PERSISTENCE_UNIT_NAME = "copaDaviNilsonPU";
+    private static EntityManagerFactory factory;
+    private static final Logger LOG = Logger.getLogger(Main.class.getName());
+    private final EntityManager em;
+    public UsuariosDAO() {
+        factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+        em = factory.createEntityManager();
     }
 
+    public List<Usuarios> getAllUsuarios() {
+        em.getTransaction().begin();
+        Query query = em.createNamedQuery("Usuarios.findAll");
+        LOG.info(query.toString());
+        List results = query.getResultList();
+        em.getTransaction().commit();
+        LOG.log(Level.INFO, "Resultados: {0}", results.size());
+        return results;
+    }
 }
