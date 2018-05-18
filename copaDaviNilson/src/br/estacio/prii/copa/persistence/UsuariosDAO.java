@@ -34,7 +34,9 @@ import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.PersistenceException;
 import javax.persistence.Query;
+import org.eclipse.persistence.exceptions.DatabaseException;
 
 public class UsuariosDAO {
 
@@ -42,20 +44,41 @@ public class UsuariosDAO {
     private static EntityManagerFactory factory;
     private static final Logger LOG = Logger.getLogger(Main.class.getName());
     private final EntityManager em;
-    public UsuariosDAO() {
-        factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-        em = factory.createEntityManager();
+    private Usuarios Usuario;
+
+    public UsuariosDAO() throws Exception {
+        this(null);
     }
 
-    public List<Usuarios> getAllUsuarios() {
-        em.getTransaction().begin();
-        Query query = em.createNamedQuery("Usuarios.findAll", Usuarios.class);
-        LOG.info(query.toString());
-        List results = query.getResultList();
-        em.getTransaction().commit();
-        LOG.log(Level.INFO, "Resultados: {0}", results.size());
-        return results;
+    public UsuariosDAO(Usuarios Usuario) throws Exception {
+        try {
+            factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+            em = factory.createEntityManager();
+            this.Usuario = Usuario;
+        } catch (DatabaseException e) {
+            throw new Exception("Erro ao conectar ao banco: " + e.getMessage());
+        } catch (PersistenceException e) {
+            LOG.severe(e.getMessage());
+            throw new Exception("Erro ao conectar ao banco. Verifique se o banco existe e não está aberto.");
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
     }
+
+    public List<Usuarios> getAllUsuarios() throws Exception {
+        try {
+            em.getTransaction().begin();
+            Query query = em.createNamedQuery("Usuarios.findAll", Usuarios.class);
+            LOG.info(query.toString());
+            List results = query.getResultList();
+            em.getTransaction().commit();
+            LOG.log(Level.INFO, "Resultados: {0}", results.size());
+            return results;
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+    }
+
     public List<Usuarios> getUsuarioByLogin(String login) {
         em.getTransaction().begin();
         Query query = em.createNamedQuery("USUARIOS.findByLogin", Usuarios.class)
@@ -65,5 +88,16 @@ public class UsuariosDAO {
         em.getTransaction().commit();
         LOG.log(Level.INFO, "Resultados: {0}", results.size());
         return results;
+    }
+
+    public void salvarUsuario() throws Exception {
+        try {
+            em.getTransaction().begin();
+            Usuario.checkUsuario();
+            em.persist(Usuario);
+            em.getTransaction().commit();
+        } catch (Exception ex) {
+            throw new Exception(ex.getMessage());
+        }
     }
 }

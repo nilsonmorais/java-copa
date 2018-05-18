@@ -28,6 +28,7 @@ package br.estacio.prii.copa.main;
 
 import br.estacio.prii.copa.entidade.Usuarios;
 import br.estacio.prii.copa.persistence.UsuariosDAO;
+import br.estacio.prii.copa.utils.Utils;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
@@ -46,12 +47,17 @@ public class Main {
             for (Usuarios Usuario : Usuarios) {
                 LOG.log(Level.INFO, "Registro: {0}", Usuario.getLogin());
             }
-            List<Usuarios> Usuarios2 = u.getUsuarioByLogin("Nilson");
-            for (Usuarios Usuario : Usuarios2) {
+            
+            Usuarios novo = new Usuarios("Nilson","Nilson","nilson@nilson.com","123");
+            novo.Salvar();
+            
+            Usuarios = u.getAllUsuarios();
+            for (Usuarios Usuario : Usuarios) {
                 LOG.log(Level.INFO, "Registro: {0}", Usuario.getLogin());
             }
+            
         } catch (Exception exception) {
-            LOG.severe(exception.getMessage());
+            Utils.showDialog(exception.getMessage());
         }
     }
 

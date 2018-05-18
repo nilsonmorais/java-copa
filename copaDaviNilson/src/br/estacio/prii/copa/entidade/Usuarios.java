@@ -26,8 +26,11 @@ For more information, please refer to <http://unlicense.org>
  */
 package br.estacio.prii.copa.entidade;
 
+import br.estacio.prii.copa.persistence.UsuariosDAO;
 import br.estacio.prii.copa.utils.Utils;
 import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -42,17 +45,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Usuarios.findAll", query = "SELECT u FROM Usuarios u"),
-//    @NamedQuery(name = "USUARIOS.findById", query = "SELECT u FROM USUARIOS u WHERE u.id = :id"),
-    @NamedQuery(name = "USUARIOS.findByLogin", query = "SELECT u FROM Usuarios u WHERE u.login = :login"),
-//    @NamedQuery(name = "USUARIOS.findBySenha", query = "SELECT u FROM USUARIOS u WHERE u.senha = :senha"),
-//    @NamedQuery(name = "USUARIOS.findByNome", query = "SELECT u FROM USUARIOS u WHERE u.nome = :nome"),
-//    @NamedQuery(name = "USUARIOS.findByEmail", query = "SELECT u FROM USUARIOS u WHERE u.email = :email"),
-//    @NamedQuery(name = "USUARIOS.findByCelular", query = "SELECT u FROM USUARIOS u WHERE u.celular = :celular"),
-//    @NamedQuery(name = "USUARIOS.findByAdmin", query = "SELECT u FROM USUARIOS u WHERE u.admin = :admin"),
-//    @NamedQuery(name = "USUARIOS.findByObs", query = "SELECT u FROM USUARIOS u WHERE u.obs = :obs")
+    @NamedQuery(name = "Usuarios.findById", query = "SELECT u FROM Usuarios u WHERE u.id = :id"),
+    @NamedQuery(name = "Usuarios.findByLogin", query = "SELECT u FROM Usuarios u WHERE u.login = :login"),
+    @NamedQuery(name = "Usuarios.findByNome", query = "SELECT u FROM Usuarios u WHERE u.nome = :nome"),
+    @NamedQuery(name = "Usuarios.findByEmail", query = "SELECT u FROM Usuarios u WHERE u.email = :email"),
+    @NamedQuery(name = "Usuarios.findByAdmin", query = "SELECT u FROM Usuarios u WHERE u.admin = :admin"),
 })
 public class Usuarios implements Serializable {
-
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -77,8 +76,15 @@ public class Usuarios implements Serializable {
     public Usuarios() {
     }
 
-    public Usuarios(Long id) {
-        this.id = id;
+    public Usuarios(String nome, String login, String email, String senha) throws Exception {
+        try {
+            setNome(nome);
+            setLogin(login);
+            setEmail(email);
+            setSenha(senha);
+        } catch (Exception ex) {
+            throw new Exception(ex.getMessage());
+        }
     }
 
     public Long getId() {
@@ -163,7 +169,7 @@ public class Usuarios implements Serializable {
 
     @Override
     public String toString() {
-        return "br.estacio.prii.copa.entidade.Usuarios[ id=" + id + " ]";
+        return "Usuario[ id=" + id + " ]";
     }
 
     /**
@@ -182,6 +188,32 @@ public class Usuarios implements Serializable {
 
     public Boolean validaLogin(String senhaValida) throws Exception {
         return senha.equals(Utils.MD5(senhaValida));
+    }
+
+    public boolean checkUsuario() throws Exception {
+        if (nome.isEmpty()) {
+            throw new Exception("Nome de usuário inválido");
+        }
+        if (email.isEmpty()) {
+            throw new Exception("Email inválido");
+        }
+        if (login.isEmpty()) {
+            throw new Exception("Nome de login inválido");
+        }
+        if (senha.isEmpty()) {
+            throw new Exception("Senha inválida");
+        }
+        
+        return true;
+    }
+
+    public void Salvar() throws Exception {
+        try {
+            UsuariosDAO u = new UsuariosDAO(this);
+            u.salvarUsuario();
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
     }
 
 }
