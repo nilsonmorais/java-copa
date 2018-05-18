@@ -30,6 +30,9 @@ import br.estacio.prii.copa.entidade.Usuarios;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 public class UsuariosDAO extends DAO {
@@ -46,14 +49,15 @@ public class UsuariosDAO extends DAO {
         this.Usuario = Usuario;
     }
 
-    public List<Usuarios> getAllUsuarios() throws Exception {
+    public static List<Usuarios> getAllUsuarios() throws Exception {
         try {
+            EntityManagerFactory factory = Persistence.createEntityManagerFactory("copaDaviNilsonPU");
+            EntityManager em = factory.createEntityManager();
             em.getTransaction().begin();
             Query query = em.createNamedQuery("Usuarios.findAll", Usuarios.class);
             LOG.info(query.toString());
             List results = query.getResultList();
             em.getTransaction().commit();
-            LOG.log(Level.INFO, "Resultados: {0}", results.size());
             return results;
         } catch (Exception e) {
             throw new Exception(e.getMessage());

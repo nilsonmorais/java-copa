@@ -29,6 +29,7 @@ package br.estacio.prii.copa.entidade;
 import br.estacio.prii.copa.persistence.UsuariosDAO;
 import br.estacio.prii.copa.utils.Utils;
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -233,6 +234,14 @@ public class Usuarios implements Serializable {
             UsuariosDAO u = new UsuariosDAO(this);
             u.deleteUsuario();
             return true;
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+    }
+    
+    public static List<Usuarios> getAll() throws Exception {
+         try {
+            return UsuariosDAO.getAllUsuarios();
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }

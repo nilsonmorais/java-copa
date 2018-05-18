@@ -26,8 +26,8 @@ For more information, please refer to <http://unlicense.org>
  */
 package br.estacio.prii.copa.main;
 
+import br.estacio.prii.copa.entidade.Estadios;
 import br.estacio.prii.copa.entidade.Usuarios;
-import br.estacio.prii.copa.persistence.UsuariosDAO;
 import br.estacio.prii.copa.utils.Utils;
 import java.sql.SQLException;
 import java.util.List;
@@ -42,15 +42,17 @@ public class Main {
     public static void main(String[] args) throws SQLException, Exception {
 
         try {
-            UsuariosDAO u = new UsuariosDAO();
-//            List<Usuarios> Usuarios = u.getAllUsuarios();
-//            for (Usuarios Usuario : Usuarios) {
-//                LOG.log(Level.INFO, "Registro: {0}", Usuario.getLogin());
-//            }
+            List<Usuarios> e = Usuarios.getAll();
+            for (Usuarios Usuario : e) {
+                LOG.log(Level.INFO, "Registro: {0}", Usuario.getNome());
+            }
             
 //            Criar Usuario
 //            Usuarios novo = new Usuarios("Nilson","Nilson","nilson@nilson.com","123");
-//            novo.Salvar();
+//            novo.Save();
+//            Criar Estadio
+//            Estadios novo = new Estadios(350, "Estadio Teste2", "Piaui");
+//            novo.Save();
 
 //            Atualizar Usuario
 //            Usuarios user = u.getUsuarioByLogin("Nilson");

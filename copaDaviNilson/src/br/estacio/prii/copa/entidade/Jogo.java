@@ -46,9 +46,9 @@ public class Jogo {
     }
     private tipoFase fase;
     private String grupo;
-    private Estadio estadio;
+    private Estadios estadio;
 
-    public Jogo(Selecao selecaoA, Selecao selecaoB, tipoFase fase, String grupo, Estadio estadio) {
+    public Jogo(Selecao selecaoA, Selecao selecaoB, tipoFase fase, String grupo, Estadios estadio) {
         this.selecaoA = selecaoA;
         this.selecaoB = selecaoB;
         this.fase = fase;
@@ -156,16 +156,6 @@ public class Jogo {
         this.grupo = grupo;
     }
 
-    public Estadio getEstadio() throws ItemNotFoundException {
-        if (estadio == null){
-            throw new ItemNotFoundException("Estádio não definido.");
-        } else {
-            return estadio;
-        }
-    }
-
-    public void setEstadio(Estadio estadio) {
-        this.estadio = estadio;
-    }
+   
 
 }

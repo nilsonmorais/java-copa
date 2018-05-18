@@ -27,8 +27,8 @@ For more information, please refer to <http://unlicense.org>
 package br.estacio.prii.copa.entidade;
 
 import br.estacio.prii.copa.persistence.EstadiosDAO;
-import br.estacio.prii.copa.persistence.UsuariosDAO;
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -163,5 +163,11 @@ public class Estadios implements Serializable {
             throw new Exception(e.getMessage());
         }
     }
-
+    public static List<Estadios> getAll() throws Exception {
+         try {
+            return EstadiosDAO.getAllEstadios();
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+    }
 }
