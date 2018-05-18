@@ -26,80 +26,61 @@ For more information, please refer to <http://unlicense.org>
  */
 package br.estacio.prii.copa.persistence;
 
-import br.estacio.prii.copa.entidade.Usuarios;
-import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.persistence.Query;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.PersistenceException;
+import org.eclipse.persistence.exceptions.DatabaseException;
 
-public class UsuariosDAO extends DAO {
-
+public class DAO {
+    private static final String PERSISTENCE_UNIT_NAME = "copaDaviNilsonPU";
+    private static EntityManagerFactory factory;
     private static final Logger LOG = Logger.getLogger(DAO.class.getName());
-    private Usuarios Usuario;
+    public EntityManager em;
 
-    public UsuariosDAO() throws Exception {
-        this(null);
-    }
-
-    public UsuariosDAO(Usuarios Usuario) throws Exception {
-        super();
-        this.Usuario = Usuario;
-    }
-
-    public List<Usuarios> getAllUsuarios() throws Exception {
+    public DAO() throws Exception {
         try {
-            em.getTransaction().begin();
-            Query query = em.createNamedQuery("Usuarios.findAll", Usuarios.class);
-            LOG.info(query.toString());
-            List results = query.getResultList();
-            em.getTransaction().commit();
-            LOG.log(Level.INFO, "Resultados: {0}", results.size());
-            return results;
+            factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+            em = factory.createEntityManager();
+        } catch (DatabaseException e) {
+            throw new Exception("Erro ao conectar ao banco: " + e.getMessage());
+        } catch (PersistenceException e) {
+            LOG.severe(e.getMessage());
+            throw new Exception("Erro ao conectar ao banco. Verifique se o banco existe e não está aberto.");
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }
     }
-
-    public Usuarios getUsuarioByLogin(String login) throws Exception {
+    public void save(Object target) throws Exception {
         try {
             em.getTransaction().begin();
-            Query query = em.createNamedQuery("Usuarios.findByLogin", Usuarios.class)
-                    .setParameter("login", login);
-            LOG.info(query.toString());
-            List results = query.getResultList();
+            em.persist(target);
             em.getTransaction().commit();
-            return (Usuarios) results.get(0);
-        } catch (Exception e) {
-            throw new Exception(e.getMessage());
-        }
-    }
-
-    public void saveUsuario() throws Exception {
-        try {
-            Usuario.checkUsuario();
-            super.save(Usuario);
         } catch (Exception ex) {
             throw new Exception(ex.getMessage());
         }
     }
-
-    public void updateUsuario() throws Exception {
+    public void update(Object target) throws Exception {
         try {
-            Usuario.checkUsuario();
-            super.update(Usuario);
+            em.getTransaction().begin();
+            em.merge(target);
+            em.getTransaction().commit();
         } catch (Exception ex) {
             throw new Exception(ex.getMessage());
         }
     }
-
-    public void deleteUsuario() throws Exception {
+    public void delete(Object target) throws Exception {
         try {
-            if (Usuario.getId() == null) {
-                throw new Exception("Não é possivel remover um registro sem ID.");
+            em.getTransaction().begin();
+            if (!em.contains(target)) {
+                target = em.merge(target);
             }
-            super.delete(Usuario);
+            em.remove(target);
+            em.getTransaction().commit();
         } catch (Exception ex) {
             throw new Exception(ex.getMessage());
         }
     }
+    
 }

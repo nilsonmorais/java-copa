@@ -29,8 +29,6 @@ package br.estacio.prii.copa.entidade;
 import br.estacio.prii.copa.persistence.UsuariosDAO;
 import br.estacio.prii.copa.utils.Utils;
 import java.io.Serializable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -51,15 +49,14 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Usuarios.findByLogin", query = "SELECT u FROM Usuarios u WHERE u.login = :login"),
     @NamedQuery(name = "Usuarios.findByNome", query = "SELECT u FROM Usuarios u WHERE u.nome = :nome"),
     @NamedQuery(name = "Usuarios.findByEmail", query = "SELECT u FROM Usuarios u WHERE u.email = :email"),
-    @NamedQuery(name = "Usuarios.findByAdmin", query = "SELECT u FROM Usuarios u WHERE u.admin = :admin"),
-})
+    @NamedQuery(name = "Usuarios.findByAdmin", query = "SELECT u FROM Usuarios u WHERE u.admin = :admin"),})
 public class Usuarios implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "ID",updatable=false,nullable=false)
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "ID", updatable = false, nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "LOGIN")
     private String login;
@@ -207,7 +204,7 @@ public class Usuarios implements Serializable {
         if (senha.isEmpty()) {
             throw new Exception("Senha inválida");
         }
-        
+
         return true;
     }
 
@@ -225,6 +222,16 @@ public class Usuarios implements Serializable {
         try {
             UsuariosDAO u = new UsuariosDAO(this);
             u.updateUsuario();
+            return true;
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    public boolean Delete() throws Exception {
+        try {
+            UsuariosDAO u = new UsuariosDAO(this);
+            u.deleteUsuario();
             return true;
         } catch (Exception e) {
             throw new Exception(e.getMessage());

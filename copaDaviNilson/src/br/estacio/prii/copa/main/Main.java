@@ -42,22 +42,31 @@ public class Main {
     public static void main(String[] args) throws SQLException, Exception {
 
         try {
-//            UsuariosDAO u = new UsuariosDAO();
+            UsuariosDAO u = new UsuariosDAO();
 //            List<Usuarios> Usuarios = u.getAllUsuarios();
 //            for (Usuarios Usuario : Usuarios) {
 //                LOG.log(Level.INFO, "Registro: {0}", Usuario.getLogin());
 //            }
             
+//            Criar Usuario
 //            Usuarios novo = new Usuarios("Nilson","Nilson","nilson@nilson.com","123");
 //            novo.Salvar();
-            
+
+//            Atualizar Usuario
 //            Usuarios user = u.getUsuarioByLogin("Nilson");
-//            user.setCelular("333");
+//            user.setCelular("222");
 //            if (user.Update()){
 //                Utils.showDialog("Usuário Atualizado!");
+//            }  
+
+//            Remover Usuario
+//            Usuarios user = u.getUsuarioByLogin("s");
+//            if (user.Delete()){
+//                Utils.showDialog("Usuário Removido!");
 //            }                    
             
         } catch (Exception exception) {
+            LOG.severe(exception.getMessage());
             Utils.showDialog(exception.getMessage());
         }
     }
