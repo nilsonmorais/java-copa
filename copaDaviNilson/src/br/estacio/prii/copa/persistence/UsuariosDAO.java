@@ -79,22 +79,32 @@ public class UsuariosDAO {
         }
     }
 
-    public List<Usuarios> getUsuarioByLogin(String login) {
+    public Usuarios getUsuarioByLogin(String login) {
         em.getTransaction().begin();
-        Query query = em.createNamedQuery("USUARIOS.findByLogin", Usuarios.class)
+        Query query = em.createNamedQuery("Usuarios.findByLogin", Usuarios.class)
                 .setParameter("login", login);
         LOG.info(query.toString());
         List results = query.getResultList();
         em.getTransaction().commit();
-        LOG.log(Level.INFO, "Resultados: {0}", results.size());
-        return results;
+        return (Usuarios) results.get(0);
     }
 
-    public void salvarUsuario() throws Exception {
+    public void saveUsuario() throws Exception {
         try {
             em.getTransaction().begin();
             Usuario.checkUsuario();
             em.persist(Usuario);
+            em.getTransaction().commit();
+        } catch (Exception ex) {
+            throw new Exception(ex.getMessage());
+        }
+    }
+
+    public void updateUsuario() throws Exception {
+        try {
+            em.getTransaction().begin();
+            Usuario.checkUsuario();
+            em.merge(Usuario);
             em.getTransaction().commit();
         } catch (Exception ex) {
             throw new Exception(ex.getMessage());

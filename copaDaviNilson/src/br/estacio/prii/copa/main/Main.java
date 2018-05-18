@@ -42,19 +42,20 @@ public class Main {
     public static void main(String[] args) throws SQLException, Exception {
 
         try {
-            UsuariosDAO u = new UsuariosDAO();
-            List<Usuarios> Usuarios = u.getAllUsuarios();
-            for (Usuarios Usuario : Usuarios) {
-                LOG.log(Level.INFO, "Registro: {0}", Usuario.getLogin());
-            }
+//            UsuariosDAO u = new UsuariosDAO();
+//            List<Usuarios> Usuarios = u.getAllUsuarios();
+//            for (Usuarios Usuario : Usuarios) {
+//                LOG.log(Level.INFO, "Registro: {0}", Usuario.getLogin());
+//            }
             
-            Usuarios novo = new Usuarios("Nilson","Nilson","nilson@nilson.com","123");
-            novo.Salvar();
+//            Usuarios novo = new Usuarios("Nilson","Nilson","nilson@nilson.com","123");
+//            novo.Salvar();
             
-            Usuarios = u.getAllUsuarios();
-            for (Usuarios Usuario : Usuarios) {
-                LOG.log(Level.INFO, "Registro: {0}", Usuario.getLogin());
-            }
+//            Usuarios user = u.getUsuarioByLogin("Nilson");
+//            user.setCelular("333");
+//            if (user.Update()){
+//                Utils.showDialog("Usuário Atualizado!");
+//            }                    
             
         } catch (Exception exception) {
             Utils.showDialog(exception.getMessage());

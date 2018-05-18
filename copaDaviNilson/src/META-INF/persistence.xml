@@ -3,6 +3,7 @@
   <persistence-unit name="copaDaviNilsonPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>br.estacio.prii.copa.entidade.Usuarios</class>
+    <class>br.estacio.prii.copa.persistence.Usuarios</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:derby:copa"/>
       <property name="javax.persistence.jdbc.user" value="admin"/>

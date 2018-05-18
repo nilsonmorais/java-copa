@@ -34,6 +34,8 @@ import java.util.logging.Logger;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -56,7 +58,8 @@ public class Usuarios implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "ID")
+    @Column(name = "ID",updatable=false,nullable=false)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
     @Column(name = "LOGIN")
     private String login;
@@ -82,6 +85,7 @@ public class Usuarios implements Serializable {
             setLogin(login);
             setEmail(email);
             setSenha(senha);
+            setAdmin(0);
         } catch (Exception ex) {
             throw new Exception(ex.getMessage());
         }
@@ -207,10 +211,21 @@ public class Usuarios implements Serializable {
         return true;
     }
 
-    public void Salvar() throws Exception {
+    public boolean Save() throws Exception {
         try {
             UsuariosDAO u = new UsuariosDAO(this);
-            u.salvarUsuario();
+            u.saveUsuario();
+            return true;
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    public boolean Update() throws Exception {
+        try {
+            UsuariosDAO u = new UsuariosDAO(this);
+            u.updateUsuario();
+            return true;
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }
