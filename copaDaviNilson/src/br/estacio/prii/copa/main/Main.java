@@ -46,6 +46,10 @@ public class Main {
             for (Usuarios Usuario : Usuarios) {
                 LOG.log(Level.INFO, "Registro: {0}", Usuario.getLogin());
             }
+            List<Usuarios> Usuarios2 = u.getUsuarioByLogin("Nilson");
+            for (Usuarios Usuario : Usuarios2) {
+                LOG.log(Level.INFO, "Registro: {0}", Usuario.getLogin());
+            }
         } catch (Exception exception) {
             LOG.severe(exception.getMessage());
         }

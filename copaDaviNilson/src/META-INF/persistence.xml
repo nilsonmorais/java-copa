@@ -4,7 +4,7 @@
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>br.estacio.prii.copa.entidade.Usuarios</class>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:derby:copa;create=true"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:derby:copa"/>
       <property name="javax.persistence.jdbc.user" value="admin"/>
       <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver"/>
       <property name="javax.persistence.jdbc.password" value="admin"/>

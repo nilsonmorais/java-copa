@@ -31,8 +31,6 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -40,12 +38,12 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
-@Table(name = "Usuarios", catalog = "APP", schema = "")
+@Table(name = "Usuarios", catalog = "", schema = "APP")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Usuarios.findAll", query = "SELECT u FROM Usuarios u"),
 //    @NamedQuery(name = "USUARIOS.findById", query = "SELECT u FROM USUARIOS u WHERE u.id = :id"),
-//    @NamedQuery(name = "USUARIOS.findByLogin", query = "SELECT u FROM USUARIOS u WHERE u.login = :login"),
+    @NamedQuery(name = "USUARIOS.findByLogin", query = "SELECT u FROM Usuarios u WHERE u.login = :login"),
 //    @NamedQuery(name = "USUARIOS.findBySenha", query = "SELECT u FROM USUARIOS u WHERE u.senha = :senha"),
 //    @NamedQuery(name = "USUARIOS.findByNome", query = "SELECT u FROM USUARIOS u WHERE u.nome = :nome"),
 //    @NamedQuery(name = "USUARIOS.findByEmail", query = "SELECT u FROM USUARIOS u WHERE u.email = :email"),

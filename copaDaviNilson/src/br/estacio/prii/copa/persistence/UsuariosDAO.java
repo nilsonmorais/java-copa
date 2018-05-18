@@ -49,7 +49,17 @@ public class UsuariosDAO {
 
     public List<Usuarios> getAllUsuarios() {
         em.getTransaction().begin();
-        Query query = em.createNamedQuery("Usuarios.findAll");
+        Query query = em.createNamedQuery("Usuarios.findAll", Usuarios.class);
+        LOG.info(query.toString());
+        List results = query.getResultList();
+        em.getTransaction().commit();
+        LOG.log(Level.INFO, "Resultados: {0}", results.size());
+        return results;
+    }
+    public List<Usuarios> getUsuarioByLogin(String login) {
+        em.getTransaction().begin();
+        Query query = em.createNamedQuery("USUARIOS.findByLogin", Usuarios.class)
+                .setParameter("login", login);
         LOG.info(query.toString());
         List results = query.getResultList();
         em.getTransaction().commit();
