@@ -26,12 +26,18 @@ For more information, please refer to <http://unlicense.org>
  */
 package br.estacio.prii.copa.gui;
 
+import br.estacio.prii.copa.entidade.Usuarios;
+import br.estacio.prii.copa.utils.Utils;
+import java.util.List;
+import java.util.logging.Logger;
+
 /**
  *
  * @author 97836834387
  */
 public class PanelSistema extends javax.swing.JPanel {
 
+    private static final Logger LOG = Logger.getLogger(PanelSistema.class.getName());
     private static PanelSistema instance;
 
     /**
@@ -40,7 +46,7 @@ public class PanelSistema extends javax.swing.JPanel {
     private PanelSistema() {
         initComponents();
     }
-
+    
     public static PanelSistema getInstance() throws Exception {
         if (instance == null) {
             instance = new PanelSistema();
@@ -61,15 +67,29 @@ public class PanelSistema extends javax.swing.JPanel {
         TabPane = new javax.swing.JTabbedPane();
         PanelUsers = new javax.swing.JPanel();
         jToolBar1 = new javax.swing.JToolBar();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        btnNew = new javax.swing.JButton();
+        btnSave = new javax.swing.JButton();
+        btnPesquisar = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
+        btnSetPass = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        txtLogin = new javax.swing.JTextField();
+        txtNome = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        txtMail = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        txtCell = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        txtObs = new javax.swing.JTextField();
+        checkIsAdmin = new javax.swing.JCheckBox();
+        jPanel1 = new javax.swing.JPanel();
+        txtSearchString = new javax.swing.JTextField();
+        comboSearchType = new javax.swing.JComboBox<>();
+        btnDoSearch = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        ListSearchResults = new javax.swing.JList<>();
         PanelConfig = new javax.swing.JPanel();
 
         jToolBar1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
@@ -78,86 +98,117 @@ public class PanelSistema extends javax.swing.JPanel {
         jToolBar1.setRollover(true);
         jToolBar1.setOpaque(false);
 
-        jButton1.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/document-new.png"))); // NOI18N
-        jButton1.setText("Novo");
-        jButton1.setBorder(javax.swing.BorderFactory.createCompoundBorder());
-        jButton1.setFocusable(false);
-        jButton1.setHideActionText(true);
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jButton1.setMaximumSize(new java.awt.Dimension(98, 36));
-        jButton1.setMinimumSize(new java.awt.Dimension(98, 36));
-        jButton1.setPreferredSize(new java.awt.Dimension(98, 36));
-        jToolBar1.add(jButton1);
+        btnNew.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        btnNew.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/document-new.png"))); // NOI18N
+        btnNew.setText("Novo");
+        btnNew.setBorder(javax.swing.BorderFactory.createCompoundBorder());
+        btnNew.setFocusable(false);
+        btnNew.setHideActionText(true);
+        btnNew.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        btnNew.setMaximumSize(new java.awt.Dimension(98, 36));
+        btnNew.setMinimumSize(new java.awt.Dimension(98, 36));
+        btnNew.setPreferredSize(new java.awt.Dimension(98, 36));
+        jToolBar1.add(btnNew);
 
-        jButton2.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/media-floppy.png"))); // NOI18N
-        jButton2.setText("Salvar");
-        jButton2.setBorder(javax.swing.BorderFactory.createCompoundBorder());
-        jButton2.setFocusable(false);
-        jButton2.setHideActionText(true);
-        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jButton2.setMaximumSize(new java.awt.Dimension(98, 36));
-        jButton2.setMinimumSize(new java.awt.Dimension(98, 36));
-        jButton2.setPreferredSize(new java.awt.Dimension(98, 36));
-        jToolBar1.add(jButton2);
+        btnSave.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/media-floppy.png"))); // NOI18N
+        btnSave.setText("Salvar");
+        btnSave.setBorder(javax.swing.BorderFactory.createCompoundBorder());
+        btnSave.setFocusable(false);
+        btnSave.setHideActionText(true);
+        btnSave.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        btnSave.setMaximumSize(new java.awt.Dimension(98, 36));
+        btnSave.setMinimumSize(new java.awt.Dimension(98, 36));
+        btnSave.setPreferredSize(new java.awt.Dimension(98, 36));
+        jToolBar1.add(btnSave);
 
-        jButton3.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/system-search.png"))); // NOI18N
-        jButton3.setText("Pesquisar");
-        jButton3.setBorder(javax.swing.BorderFactory.createCompoundBorder());
-        jButton3.setFocusable(false);
-        jButton3.setHideActionText(true);
-        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jButton3.setMaximumSize(new java.awt.Dimension(98, 36));
-        jButton3.setMinimumSize(new java.awt.Dimension(98, 36));
-        jButton3.setPreferredSize(new java.awt.Dimension(98, 36));
-        jToolBar1.add(jButton3);
-
-        jButton4.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/user-trash.png"))); // NOI18N
-        jButton4.setText("Excluir");
-        jButton4.setBorder(javax.swing.BorderFactory.createCompoundBorder());
-        jButton4.setFocusable(false);
-        jButton4.setHideActionText(true);
-        jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jButton4.setMaximumSize(new java.awt.Dimension(98, 36));
-        jButton4.setMinimumSize(new java.awt.Dimension(98, 36));
-        jButton4.setPreferredSize(new java.awt.Dimension(98, 36));
-        jToolBar1.add(jButton4);
-
-        jButton5.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/software-update-urgent.png"))); // NOI18N
-        jButton5.setText("Redefinir Senha");
-        jButton5.setBorder(javax.swing.BorderFactory.createCompoundBorder());
-        jButton5.setFocusable(false);
-        jButton5.setHideActionText(true);
-        jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jButton5.setMaximumSize(new java.awt.Dimension(120, 36));
-        jButton5.setMinimumSize(new java.awt.Dimension(120, 36));
-        jButton5.setPreferredSize(new java.awt.Dimension(120, 36));
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        btnPesquisar.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        btnPesquisar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/system-search.png"))); // NOI18N
+        btnPesquisar.setText("Pesquisar");
+        btnPesquisar.setBorder(javax.swing.BorderFactory.createCompoundBorder());
+        btnPesquisar.setFocusable(false);
+        btnPesquisar.setHideActionText(true);
+        btnPesquisar.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        btnPesquisar.setMaximumSize(new java.awt.Dimension(98, 36));
+        btnPesquisar.setMinimumSize(new java.awt.Dimension(98, 36));
+        btnPesquisar.setPreferredSize(new java.awt.Dimension(98, 36));
+        btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                btnPesquisarActionPerformed(evt);
             }
         });
-        jToolBar1.add(jButton5);
+        jToolBar1.add(btnPesquisar);
+
+        btnDelete.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/user-trash.png"))); // NOI18N
+        btnDelete.setText("Excluir");
+        btnDelete.setBorder(javax.swing.BorderFactory.createCompoundBorder());
+        btnDelete.setFocusable(false);
+        btnDelete.setHideActionText(true);
+        btnDelete.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        btnDelete.setMaximumSize(new java.awt.Dimension(98, 36));
+        btnDelete.setMinimumSize(new java.awt.Dimension(98, 36));
+        btnDelete.setPreferredSize(new java.awt.Dimension(98, 36));
+        jToolBar1.add(btnDelete);
+
+        btnSetPass.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        btnSetPass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/software-update-urgent.png"))); // NOI18N
+        btnSetPass.setText("Redefinir Senha");
+        btnSetPass.setBorder(javax.swing.BorderFactory.createCompoundBorder());
+        btnSetPass.setFocusable(false);
+        btnSetPass.setHideActionText(true);
+        btnSetPass.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        btnSetPass.setMaximumSize(new java.awt.Dimension(120, 36));
+        btnSetPass.setMinimumSize(new java.awt.Dimension(120, 36));
+        btnSetPass.setPreferredSize(new java.awt.Dimension(120, 36));
+        btnSetPass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSetPassActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnSetPass);
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel1.setText("Login:");
+        jLabel1.setText("Login");
 
-        jTextField1.setColumns(30);
-        jTextField1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jTextField1.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)), javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+        txtLogin.setColumns(30);
+        txtLogin.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtLogin.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)), javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 
-        jTextField2.setColumns(30);
-        jTextField2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jTextField2.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)), javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+        txtNome.setColumns(30);
+        txtNome.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtNome.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)), javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 
         jLabel2.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel2.setText("Nome de Usuário:");
+        jLabel2.setText("Nome");
+
+        jLabel3.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel3.setText("E-mail");
+
+        txtMail.setColumns(30);
+        txtMail.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtMail.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)), javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+
+        jLabel4.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel4.setText("Celular");
+
+        txtCell.setColumns(30);
+        txtCell.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtCell.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)), javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+
+        jLabel5.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel5.setText("Observações");
+
+        txtObs.setColumns(30);
+        txtObs.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtObs.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)), javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+
+        checkIsAdmin.setText("Administrador");
 
         javax.swing.GroupLayout PanelUsersLayout = new javax.swing.GroupLayout(PanelUsers);
         PanelUsers.setLayout(PanelUsersLayout);
@@ -166,13 +217,30 @@ public class PanelSistema extends javax.swing.JPanel {
             .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 712, Short.MAX_VALUE)
             .addGroup(PanelUsersLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(PanelUsersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(PanelUsersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(PanelUsersLayout.createSequentialGroup()
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtCell, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(PanelUsersLayout.createSequentialGroup()
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(PanelUsersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(checkIsAdmin)
+                            .addComponent(txtObs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(PanelUsersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(PanelUsersLayout.createSequentialGroup()
+                            .addGroup(PanelUsersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(PanelUsersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(PanelUsersLayout.createSequentialGroup()
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(txtMail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         PanelUsersLayout.setVerticalGroup(
@@ -181,16 +249,94 @@ public class PanelSistema extends javax.swing.JPanel {
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(PanelUsersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(PanelUsersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addContainerGap(201, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(PanelUsersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtMail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(PanelUsersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtCell, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(PanelUsersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtObs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(checkIsAdmin)
+                .addContainerGap(65, Short.MAX_VALUE))
         );
 
         TabPane.addTab("Usuários", PanelUsers);
+
+        txtSearchString.setColumns(30);
+        txtSearchString.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtSearchString.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)), javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+
+        comboSearchType.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        comboSearchType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nome", "Login", "E-Mail", "Admin" }));
+        comboSearchType.setBorder(javax.swing.BorderFactory.createCompoundBorder(null, javax.swing.BorderFactory.createEmptyBorder(2, 2, 2, 2)));
+
+        btnDoSearch.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        btnDoSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/system-search.png"))); // NOI18N
+        btnDoSearch.setText("Pesquisar");
+        btnDoSearch.setBorder(javax.swing.BorderFactory.createCompoundBorder());
+        btnDoSearch.setFocusable(false);
+        btnDoSearch.setHideActionText(true);
+        btnDoSearch.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        btnDoSearch.setMaximumSize(new java.awt.Dimension(98, 36));
+        btnDoSearch.setMinimumSize(new java.awt.Dimension(98, 36));
+        btnDoSearch.setPreferredSize(new java.awt.Dimension(98, 36));
+        btnDoSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDoSearchActionPerformed(evt);
+            }
+        });
+
+        jScrollPane1.setViewportView(ListSearchResults);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 680, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addGap(66, 66, 66)
+                        .addComponent(comboSearchType, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtSearchString, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnDoSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jSeparator1)))
+                .addGap(20, 20, 20))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(btnDoSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtSearchString, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboSearchType, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        TabPane.addTab("Buscar", jPanel1);
 
         javax.swing.GroupLayout PanelConfigLayout = new javax.swing.GroupLayout(PanelConfig);
         PanelConfig.setLayout(PanelConfigLayout);
@@ -211,34 +357,71 @@ public class PanelSistema extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(TabPane)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(TabPane)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(TabPane, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 98, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void btnSetPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSetPassActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_btnSetPassActionPerformed
+
+    private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
+        TabPane.setSelectedIndex(1);
+        refreshSearchList();
+    }//GEN-LAST:event_btnPesquisarActionPerformed
+
+    private void btnDoSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoSearchActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnDoSearchActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JList<String> ListSearchResults;
     private javax.swing.JPanel PanelConfig;
     private javax.swing.JPanel PanelUsers;
     private javax.swing.JTabbedPane TabPane;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
+    private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnDoSearch;
+    private javax.swing.JButton btnNew;
+    private javax.swing.JButton btnPesquisar;
+    private javax.swing.JButton btnSave;
+    private javax.swing.JButton btnSetPass;
+    private javax.swing.JCheckBox checkIsAdmin;
+    private javax.swing.JComboBox<String> comboSearchType;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JTextField txtCell;
+    private javax.swing.JTextField txtLogin;
+    private javax.swing.JTextField txtMail;
+    private javax.swing.JTextField txtNome;
+    private javax.swing.JTextField txtObs;
+    private javax.swing.JTextField txtSearchString;
     // End of variables declaration//GEN-END:variables
+
+    private void refreshSearchList() {
+        try {
+            List<Usuarios> result = Usuarios.getAll();
+            
+        } catch (Exception e) {
+            
+            Utils.showDialog(e.getMessage());
+        }
+    }
 }

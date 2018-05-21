@@ -30,18 +30,15 @@ import br.estacio.prii.copa.gui.MainFrame;
 import br.estacio.prii.copa.utils.Utils;
 import java.sql.SQLException;
 import java.util.logging.Logger;
-import javax.swing.UIManager;
 
 
 public class Main {
 
     private static final Logger LOG = Logger.getLogger(Main.class.getName());
-    
+            
     public static void main(String[] args) throws SQLException, Exception {
 
         try {
-            UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
-            
             MainFrame main = new MainFrame();
             main.setVisible(true);
 //            List<Usuarios> e = Usuarios.getAll();
