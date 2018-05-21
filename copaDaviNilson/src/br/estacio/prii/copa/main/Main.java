@@ -26,15 +26,11 @@ For more information, please refer to <http://unlicense.org>
  */
 package br.estacio.prii.copa.main;
 
-import br.estacio.prii.copa.entidade.Estadios;
-import br.estacio.prii.copa.entidade.Usuarios;
-import br.estacio.prii.copa.gui.Principal;
+import br.estacio.prii.copa.gui.MainFrame;
 import br.estacio.prii.copa.utils.Utils;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JFrame;
+import javax.swing.UIManager;
 
 
 public class Main {
@@ -44,6 +40,10 @@ public class Main {
     public static void main(String[] args) throws SQLException, Exception {
 
         try {
+            UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+            
+            MainFrame main = new MainFrame();
+            main.setVisible(true);
 //            List<Usuarios> e = Usuarios.getAll();
 //            for (Usuarios Usuario : e) {
 //                LOG.log(Level.INFO, "Registro: {0}", Usuario.getNome());

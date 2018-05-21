@@ -26,10 +26,11 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 For more information, please refer to <http://unlicense.org>
  */
-
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -39,6 +40,8 @@ import javax.swing.JOptionPane;
  * Alguns métodos utilitários.
  */
 public class Utils {
+
+    private static final Logger LOG = Logger.getLogger(Utils.class.getName());
 
     public static Dimension getWindowDimensions() {
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
@@ -86,9 +89,10 @@ public class Utils {
 
     /**
      * Retorna um hash MD5 de uma string.
+     *
      * @param md5 String a ser analisada
      * @return Hash MD5
-     * @throws Exception 
+     * @throws Exception
      */
     public static String MD5(String md5) throws Exception {
         try {
@@ -101,8 +105,23 @@ public class Utils {
             return sb.toString();
         } catch (java.security.NoSuchAlgorithmException e) {
             throw new Exception("Algoritmo não suportado.");
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new Exception(e.getMessage());
+        }
+    }
+
+    public static void MaximizeJFrame(JFrame obj) {
+        obj.setExtendedState(obj.getExtendedState() | JFrame.MAXIMIZED_BOTH);
+    }
+
+    public static ImageIcon createImageIcon(String iconpath) {
+
+        java.net.URL imgURL = Utils.class.getResource(iconpath);
+        if (imgURL != null) {
+            return new ImageIcon(imgURL);
+        } else {
+            LOG.log(Level.WARNING, "Couldn''t find file: {0}", iconpath);
+            return null;
         }
     }
 }
