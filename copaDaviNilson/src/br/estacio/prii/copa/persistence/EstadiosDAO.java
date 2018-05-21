@@ -28,31 +28,32 @@ package br.estacio.prii.copa.persistence;
 
 import br.estacio.prii.copa.entidade.Estadios;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.Query;
 
-public class EstadiosDAO extends DAO {
+public class EstadiosDAO {
 
     private static final Logger LOG = Logger.getLogger(DAO.class.getName());
     private Estadios Estadio;
+    private DAO DAO;
+    private EntityManager em;
 
     public EstadiosDAO() throws Exception {
         this(null);
     }
 
     public EstadiosDAO(Estadios Estadio) throws Exception {
-        super();
+        if (em == null){
+            this.em = DAO.getInstance().getEntityManager();
+            this.DAO = DAO.getInstance();
+        }
         this.Estadio = Estadio;
     }
 
     public static List<Estadios> getAllEstadios() throws Exception {
         try {
-            EntityManagerFactory factory = Persistence.createEntityManagerFactory("copaDaviNilsonPU");
-            EntityManager em = factory.createEntityManager();
+            EntityManager em = br.estacio.prii.copa.persistence.DAO.getInstance().getEntityManager();
             em.getTransaction().begin();
             Query query = em.createNamedQuery("Estadios.findAll", Estadios.class);
             LOG.info(query.toString());
@@ -81,7 +82,7 @@ public class EstadiosDAO extends DAO {
     public void saveEstadio() throws Exception {
         try {
             Estadio.checkEstadio();
-            super.save(Estadio);
+            DAO.save(Estadio);
         } catch (Exception ex) {
             throw new Exception(ex.getMessage());
         }
@@ -90,7 +91,7 @@ public class EstadiosDAO extends DAO {
     public void updateEstadio() throws Exception {
         try {
             Estadio.checkEstadio();
-            super.update(Estadio);
+            DAO.update(Estadio);
         } catch (Exception ex) {
             throw new Exception(ex.getMessage());
         }
@@ -101,7 +102,7 @@ public class EstadiosDAO extends DAO {
             if (Estadio.getId() == null) {
                 throw new Exception("Não é possivel remover um registro sem ID.");
             }
-            super.delete(Estadio);
+            DAO.delete(Estadio);
         } catch (Exception ex) {
             throw new Exception(ex.getMessage());
         }

@@ -28,11 +28,13 @@ package br.estacio.prii.copa.main;
 
 import br.estacio.prii.copa.entidade.Estadios;
 import br.estacio.prii.copa.entidade.Usuarios;
+import br.estacio.prii.copa.gui.Principal;
 import br.estacio.prii.copa.utils.Utils;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 
 
 public class Main {
@@ -42,10 +44,10 @@ public class Main {
     public static void main(String[] args) throws SQLException, Exception {
 
         try {
-            List<Usuarios> e = Usuarios.getAll();
-            for (Usuarios Usuario : e) {
-                LOG.log(Level.INFO, "Registro: {0}", Usuario.getNome());
-            }
+//            List<Usuarios> e = Usuarios.getAll();
+//            for (Usuarios Usuario : e) {
+//                LOG.log(Level.INFO, "Registro: {0}", Usuario.getNome());
+//            }
             
 //            Criar Usuario
 //            Usuarios novo = new Usuarios("Nilson","Nilson","nilson@nilson.com","123");

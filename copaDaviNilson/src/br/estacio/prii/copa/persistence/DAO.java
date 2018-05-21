@@ -33,16 +33,20 @@ import javax.persistence.Persistence;
 import javax.persistence.PersistenceException;
 import org.eclipse.persistence.exceptions.DatabaseException;
 
+/**
+ * Classe DAO executa as acoes no banco e usa o padrão singleton.
+ */
 public class DAO {
+
+    private static DAO instance;
     private static final String PERSISTENCE_UNIT_NAME = "copaDaviNilsonPU";
     private static EntityManagerFactory factory;
     private static final Logger LOG = Logger.getLogger(DAO.class.getName());
     public EntityManager em;
 
-    public DAO() throws Exception {
+    private DAO() throws Exception {
         try {
-            factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-            em = factory.createEntityManager();
+            em = getEntityManager();
         } catch (DatabaseException e) {
             throw new Exception("Erro ao conectar ao banco: " + e.getMessage());
         } catch (PersistenceException e) {
@@ -52,6 +56,24 @@ public class DAO {
             throw new Exception(e.getMessage());
         }
     }
+
+    public EntityManager getEntityManager() {
+        factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+        if (em == null) {
+            em = factory.createEntityManager();
+        }
+
+        return em;
+    }
+
+    public static DAO getInstance() throws Exception {
+        if (instance == null) {
+            instance = new DAO();
+        }
+
+        return instance;
+    }
+
     public void save(Object target) throws Exception {
         try {
             em.getTransaction().begin();
@@ -61,6 +83,7 @@ public class DAO {
             throw new Exception(ex.getMessage());
         }
     }
+
     public void update(Object target) throws Exception {
         try {
             em.getTransaction().begin();
@@ -70,6 +93,7 @@ public class DAO {
             throw new Exception(ex.getMessage());
         }
     }
+
     public void delete(Object target) throws Exception {
         try {
             em.getTransaction().begin();
@@ -82,5 +106,5 @@ public class DAO {
             throw new Exception(ex.getMessage());
         }
     }
-    
+
 }

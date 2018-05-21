@@ -28,31 +28,33 @@ package br.estacio.prii.copa.persistence;
 
 import br.estacio.prii.copa.entidade.Usuarios;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.Query;
 
-public class UsuariosDAO extends DAO {
+public class UsuariosDAO {
 
     private static final Logger LOG = Logger.getLogger(DAO.class.getName());
     private Usuarios Usuario;
+    private EntityManager em;
+    private DAO DAO;
+
 
     public UsuariosDAO() throws Exception {
         this(null);
     }
 
     public UsuariosDAO(Usuarios Usuario) throws Exception {
-        super();
+        if (em == null){
+            this.em = DAO.getInstance().getEntityManager();
+            this.DAO = DAO.getInstance();
+        }
         this.Usuario = Usuario;
     }
 
     public static List<Usuarios> getAllUsuarios() throws Exception {
         try {
-            EntityManagerFactory factory = Persistence.createEntityManagerFactory("copaDaviNilsonPU");
-            EntityManager em = factory.createEntityManager();
+            EntityManager em = br.estacio.prii.copa.persistence.DAO.getInstance().getEntityManager();
             em.getTransaction().begin();
             Query query = em.createNamedQuery("Usuarios.findAll", Usuarios.class);
             LOG.info(query.toString());
@@ -81,7 +83,7 @@ public class UsuariosDAO extends DAO {
     public void saveUsuario() throws Exception {
         try {
             Usuario.checkUsuario();
-            super.save(Usuario);
+            DAO.save(Usuario);
         } catch (Exception ex) {
             throw new Exception(ex.getMessage());
         }
@@ -90,7 +92,7 @@ public class UsuariosDAO extends DAO {
     public void updateUsuario() throws Exception {
         try {
             Usuario.checkUsuario();
-            super.update(Usuario);
+            DAO.update(Usuario);
         } catch (Exception ex) {
             throw new Exception(ex.getMessage());
         }
@@ -101,7 +103,7 @@ public class UsuariosDAO extends DAO {
             if (Usuario.getId() == null) {
                 throw new Exception("Não é possivel remover um registro sem ID.");
             }
-            super.delete(Usuario);
+            DAO.delete(Usuario);
         } catch (Exception ex) {
             throw new Exception(ex.getMessage());
         }
