@@ -34,21 +34,23 @@ import javax.persistence.Query;
 
 public class EstadiosDAO {
 
+    private static EstadiosDAO instance;
     private static final Logger LOG = Logger.getLogger(DAO.class.getName());
     private Estadios Estadio;
     private DAO DAO;
     private EntityManager em;
-
-    public EstadiosDAO() throws Exception {
-        this(null);
-    }
-
-    public EstadiosDAO(Estadios Estadio) throws Exception {
+    
+    private EstadiosDAO() throws Exception {
         if (em == null){
             this.em = DAO.getInstance().getEntityManager();
             this.DAO = DAO.getInstance();
         }
-        this.Estadio = Estadio;
+    }
+    public static synchronized EstadiosDAO getInstance() throws Exception {
+        if (instance == null){
+            instance = new EstadiosDAO();
+        }
+        return instance;
     }
 
     public static List<Estadios> getAllEstadios() throws Exception {
@@ -106,5 +108,9 @@ public class EstadiosDAO {
         } catch (Exception ex) {
             throw new Exception(ex.getMessage());
         }
+    }
+
+    public void setEstadio(Estadios Estadio) {
+        this.Estadio = Estadio;
     }
 }

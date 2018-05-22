@@ -27,11 +27,9 @@ For more information, please refer to <http://unlicense.org>
 package br.estacio.prii.copa.gui;
 
 import br.estacio.prii.copa.entidade.Usuarios;
-import br.estacio.prii.copa.persistence.UsuariosDAO;
 import br.estacio.prii.copa.utils.Utils;
 import java.awt.event.MouseEvent;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 
@@ -421,8 +419,7 @@ public class PanelSistema extends javax.swing.JPanel {
         if (evt.getClickCount() >= 2 && evt.getButton() == MouseEvent.BUTTON1) {
             try {
                 String name = ListSearchResults.getSelectedValue();
-                UsuariosDAO usuario = new UsuariosDAO();
-                this.Usuario = usuario.getUsuarioByName(name);
+                this.Usuario = Usuarios.getUsuarioByName(name);
                 refreshForms();
                 TabPane.setSelectedIndex(0);
 

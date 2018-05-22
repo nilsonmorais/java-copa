@@ -136,7 +136,8 @@ public class Estadios implements Serializable {
     }
     public boolean Save() throws Exception {
         try {
-            EstadiosDAO e = new EstadiosDAO(this);
+            EstadiosDAO e = EstadiosDAO.getInstance();
+            e.setEstadio(this);
             e.saveEstadio();
             return true;
         } catch (Exception e) {
@@ -146,7 +147,8 @@ public class Estadios implements Serializable {
 
     public boolean Update() throws Exception {
         try {
-            EstadiosDAO e = new EstadiosDAO(this);
+            EstadiosDAO e = EstadiosDAO.getInstance();
+            e.setEstadio(this);
             e.updateEstadio();
             return true;
         } catch (Exception e) {
@@ -156,7 +158,8 @@ public class Estadios implements Serializable {
 
     public boolean Delete() throws Exception {
         try {
-            EstadiosDAO e = new EstadiosDAO(this);
+            EstadiosDAO e = EstadiosDAO.getInstance();
+            e.setEstadio(this);
             e.deleteEstadio();
             return true;
         } catch (Exception e) {

@@ -54,6 +54,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Usuarios implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @Basic(optional = false)
     @Column(name = "ID", updatable = false, nullable = false)
@@ -211,7 +212,8 @@ public class Usuarios implements Serializable {
 
     public boolean Save() throws Exception {
         try {
-            UsuariosDAO u = new UsuariosDAO(this);
+            UsuariosDAO u = UsuariosDAO.getInstance();
+            u.setUsuario(this);
             u.saveUsuario();
             return true;
         } catch (Exception e) {
@@ -221,7 +223,8 @@ public class Usuarios implements Serializable {
 
     public boolean Update() throws Exception {
         try {
-            UsuariosDAO u = new UsuariosDAO(this);
+            UsuariosDAO u = UsuariosDAO.getInstance();
+            u.setUsuario(this);
             u.updateUsuario();
             return true;
         } catch (Exception e) {
@@ -231,7 +234,8 @@ public class Usuarios implements Serializable {
 
     public boolean Delete() throws Exception {
         try {
-            UsuariosDAO u = new UsuariosDAO(this);
+            UsuariosDAO u = UsuariosDAO.getInstance();
+            u.setUsuario(this);
             u.deleteUsuario();
             return true;
         } catch (Exception e) {
@@ -244,6 +248,14 @@ public class Usuarios implements Serializable {
             return UsuariosDAO.getAllUsuarios();
         } catch (Exception e) {
             throw new Exception(e.getMessage());
+        }
+    }
+    public static Usuarios getUsuarioByName(String name) throws Exception {
+        try {
+            UsuariosDAO u = UsuariosDAO.getInstance();
+            return u.getUsuarioByName(name);
+        } catch (Exception exception) {
+            throw new Exception(exception.getMessage());
         }
     }
    

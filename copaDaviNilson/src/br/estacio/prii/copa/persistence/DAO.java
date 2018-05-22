@@ -56,6 +56,12 @@ public class DAO {
             throw new Exception(e.getMessage());
         }
     }
+    public static synchronized DAO getInstance() throws Exception {
+        if(instance == null){
+            instance = new DAO();
+        }
+        return instance;
+    }
 
     public EntityManager getEntityManager() {
         factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
@@ -64,14 +70,6 @@ public class DAO {
         }
 
         return em;
-    }
-
-    public static DAO getInstance() throws Exception {
-        if (instance == null) {
-            instance = new DAO();
-        }
-
-        return instance;
     }
 
     public void save(Object target) throws Exception {

@@ -34,22 +34,23 @@ import javax.persistence.Query;
 
 public class UsuariosDAO {
 
+    private static UsuariosDAO instance;
     private static final Logger LOG = Logger.getLogger(DAO.class.getName());
-
     private Usuarios Usuario;
     private EntityManager em;
     private DAO DAO;
 
-    public UsuariosDAO() throws Exception {
-        this(null);
-    }
-
-    public UsuariosDAO(Usuarios Usuario) throws Exception {
+    private UsuariosDAO() throws Exception {
         if (em == null) {
             this.em = DAO.getInstance().getEntityManager();
             this.DAO = DAO.getInstance();
         }
-        this.Usuario = Usuario;
+    }
+    public static synchronized UsuariosDAO getInstance() throws Exception {
+        if(instance == null){
+            instance = new UsuariosDAO();
+        }
+        return instance;
     }
 
     public static List<Usuarios> getAllUsuarios() throws Exception {
@@ -121,5 +122,9 @@ public class UsuariosDAO {
         } catch (Exception ex) {
             throw new Exception(ex.getMessage());
         }
+    }
+
+    public void setUsuario(Usuarios Usuario) {
+        this.Usuario = Usuario;
     }
 }
