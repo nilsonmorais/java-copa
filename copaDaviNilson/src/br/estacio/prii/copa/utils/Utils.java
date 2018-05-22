@@ -124,4 +124,12 @@ public class Utils {
             return null;
         }
     }
+
+    public static String showInput(String msg) {
+        return JOptionPane.showInputDialog(null, msg);
+    }
+
+    public static Boolean showConfirmation(String msg) {
+        return JOptionPane.showConfirmDialog(null, msg, "Aviso", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
+    }
 }

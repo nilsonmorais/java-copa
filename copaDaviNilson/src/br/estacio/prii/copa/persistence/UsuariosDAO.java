@@ -35,17 +35,17 @@ import javax.persistence.Query;
 public class UsuariosDAO {
 
     private static final Logger LOG = Logger.getLogger(DAO.class.getName());
+
     private Usuarios Usuario;
     private EntityManager em;
     private DAO DAO;
-
 
     public UsuariosDAO() throws Exception {
         this(null);
     }
 
     public UsuariosDAO(Usuarios Usuario) throws Exception {
-        if (em == null){
+        if (em == null) {
             this.em = DAO.getInstance().getEntityManager();
             this.DAO = DAO.getInstance();
         }
@@ -71,6 +71,20 @@ public class UsuariosDAO {
             em.getTransaction().begin();
             Query query = em.createNamedQuery("Usuarios.findByLogin", Usuarios.class)
                     .setParameter("login", login);
+            LOG.info(query.toString());
+            List results = query.getResultList();
+            em.getTransaction().commit();
+            return (Usuarios) results.get(0);
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    public Usuarios getUsuarioByName(String name) throws Exception {
+        try {
+            em.getTransaction().begin();
+            Query query = em.createNamedQuery("Usuarios.findByNome", Usuarios.class)
+                    .setParameter("nome", name);
             LOG.info(query.toString());
             List results = query.getResultList();
             em.getTransaction().commit();

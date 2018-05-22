@@ -27,9 +27,13 @@ For more information, please refer to <http://unlicense.org>
 package br.estacio.prii.copa.gui;
 
 import br.estacio.prii.copa.entidade.Usuarios;
+import br.estacio.prii.copa.persistence.UsuariosDAO;
 import br.estacio.prii.copa.utils.Utils;
+import java.awt.event.MouseEvent;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -39,6 +43,7 @@ public class PanelSistema extends javax.swing.JPanel {
 
     private static final Logger LOG = Logger.getLogger(PanelSistema.class.getName());
     private static PanelSistema instance;
+    private Usuarios Usuario;
 
     /**
      * Creates new form PanelSistema
@@ -46,7 +51,7 @@ public class PanelSistema extends javax.swing.JPanel {
     private PanelSistema() {
         initComponents();
     }
-    
+
     public static PanelSistema getInstance() throws Exception {
         if (instance == null) {
             instance = new PanelSistema();
@@ -108,6 +113,11 @@ public class PanelSistema extends javax.swing.JPanel {
         btnNew.setMaximumSize(new java.awt.Dimension(98, 36));
         btnNew.setMinimumSize(new java.awt.Dimension(98, 36));
         btnNew.setPreferredSize(new java.awt.Dimension(98, 36));
+        btnNew.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNewActionPerformed(evt);
+            }
+        });
         jToolBar1.add(btnNew);
 
         btnSave.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
@@ -120,6 +130,11 @@ public class PanelSistema extends javax.swing.JPanel {
         btnSave.setMaximumSize(new java.awt.Dimension(98, 36));
         btnSave.setMinimumSize(new java.awt.Dimension(98, 36));
         btnSave.setPreferredSize(new java.awt.Dimension(98, 36));
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
         jToolBar1.add(btnSave);
 
         btnPesquisar.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
@@ -149,6 +164,11 @@ public class PanelSistema extends javax.swing.JPanel {
         btnDelete.setMaximumSize(new java.awt.Dimension(98, 36));
         btnDelete.setMinimumSize(new java.awt.Dimension(98, 36));
         btnDelete.setPreferredSize(new java.awt.Dimension(98, 36));
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
         jToolBar1.add(btnDelete);
 
         btnSetPass.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
@@ -228,19 +248,18 @@ public class PanelSistema extends javax.swing.JPanel {
                         .addGroup(PanelUsersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(checkIsAdmin)
                             .addComponent(txtObs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(PanelUsersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(PanelUsersLayout.createSequentialGroup()
-                            .addGroup(PanelUsersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(PanelUsersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(PanelUsersLayout.createSequentialGroup()
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(txtMail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(PanelUsersLayout.createSequentialGroup()
+                        .addGroup(PanelUsersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(PanelUsersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(PanelUsersLayout.createSequentialGroup()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtMail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         PanelUsersLayout.setVerticalGroup(
@@ -298,6 +317,11 @@ public class PanelSistema extends javax.swing.JPanel {
             }
         });
 
+        ListSearchResults.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ListSearchResultsMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(ListSearchResults);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -372,7 +396,16 @@ public class PanelSistema extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSetPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSetPassActionPerformed
-        // TODO add your handling code here:
+        if (this.Usuario != null) {
+            try {
+                String senha = Utils.showInput("Digite a nova senha: ");
+                this.Usuario.setSenha(senha);
+                this.Usuario.Save();
+                Utils.showDialog("Senha alterada!");
+            } catch (Exception ex) {
+                Utils.showDialog(ex.getMessage());
+            }
+        }
     }//GEN-LAST:event_btnSetPassActionPerformed
 
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
@@ -383,6 +416,61 @@ public class PanelSistema extends javax.swing.JPanel {
     private void btnDoSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoSearchActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnDoSearchActionPerformed
+
+    private void ListSearchResultsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ListSearchResultsMouseClicked
+        if (evt.getClickCount() >= 2 && evt.getButton() == MouseEvent.BUTTON1) {
+            try {
+                String name = ListSearchResults.getSelectedValue();
+                UsuariosDAO usuario = new UsuariosDAO();
+                this.Usuario = usuario.getUsuarioByName(name);
+                refreshForms();
+                TabPane.setSelectedIndex(0);
+
+            } catch (Exception ex) {
+                Utils.showDialog(ex.getMessage());
+            }
+
+        }
+    }//GEN-LAST:event_ListSearchResultsMouseClicked
+
+    private void btnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewActionPerformed
+        clearForms();
+    }//GEN-LAST:event_btnNewActionPerformed
+
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        try {
+            if (this.Usuario == null) {
+                Usuarios usuario = new Usuarios(txtNome.getText(), txtLogin.getText(), txtMail.getText(), "");
+                this.Usuario = usuario;
+            }
+            this.Usuario.setAdmin(checkIsAdmin.isSelected() ? 1 : 0);
+            this.Usuario.setObs(txtObs.getText());
+            this.Usuario.setCelular(txtCell.getText());
+            this.Usuario.setEmail(txtMail.getText());
+            this.Usuario.setLogin(txtLogin.getText());
+            this.Usuario.setNome(txtNome.getText());
+
+            this.Usuario.Save();
+            Utils.showDialog("Usuário Adicionado!");
+        } catch (Exception ex) {
+            Utils.showDialog(ex.getMessage());
+        }
+    }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        if (this.Usuario != null) {
+            if (Utils.showConfirmation("Deseja realmente apagar o usuario?")) {
+                try {
+                    this.Usuario.Delete();
+                    Utils.showDialog("Usuário removido");
+                    clearForms();
+                } catch (Exception ex) {
+                    Utils.showDialog(ex.getMessage());
+                }
+            }
+        }
+
+    }//GEN-LAST:event_btnDeleteActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -417,11 +505,36 @@ public class PanelSistema extends javax.swing.JPanel {
 
     private void refreshSearchList() {
         try {
+            DefaultListModel listModel = new DefaultListModel();
             List<Usuarios> result = Usuarios.getAll();
-            
+            for (Usuarios usuario : result) {
+                listModel.addElement(usuario.getNome());
+            }
+            ListSearchResults.setModel(listModel);
         } catch (Exception e) {
-            
+
             Utils.showDialog(e.getMessage());
         }
+    }
+
+    private void refreshForms() {
+        if (this.Usuario != null) {
+            txtCell.setText(Usuario.getCelular());
+            txtLogin.setText(Usuario.getLogin());
+            txtMail.setText(Usuario.getEmail());
+            txtNome.setText(Usuario.getNome());
+            txtObs.setText(Usuario.getObs());
+            checkIsAdmin.setSelected((Usuario.getAdmin() == 1));
+        }
+    }
+
+    private void clearForms() {
+        this.Usuario = null;
+        txtCell.setText("");
+        txtLogin.setText("");
+        txtMail.setText("");
+        txtNome.setText("");
+        txtObs.setText("");
+        checkIsAdmin.setSelected(false);
     }
 }

@@ -246,5 +246,5 @@ public class Usuarios implements Serializable {
             throw new Exception(e.getMessage());
         }
     }
-
+   
 }
